@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addBook } from "../store/reducers/action";
 
 interface FormData {
   bookName: string;
@@ -24,6 +24,8 @@ export default function AddBook() {
 
   const [err, setErr] = useState<FormErr>({});
   const [formOpen, setFormOpen] = useState<boolean>(true);
+  const dispatch: any = useDispatch();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -65,30 +67,10 @@ export default function AddBook() {
     e.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length === 0) {
-      alert("Thêm  thành công!");
+      dispatch(addBook(formData));
     } else {
       setErr(newErrors);
     }
-  };
-
-  const addBook = () => {
-    axios
-      .post("http://localhost:8080/book", formData)
-      .then((res) => {
-        console.log(res.data);
-
-        setFormData({
-          bookName: "",
-          borrowerName: "",
-          borrowDate: "",
-          returnDate: "",
-        });
-        setErr({});
-      })
-      .catch((err) => {
-        console.error("Error adding book:", err);
-        alert("Đã xảy ra lỗi khi thêm sách.");
-      });
   };
 
   return (

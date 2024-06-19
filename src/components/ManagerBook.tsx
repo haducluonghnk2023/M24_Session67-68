@@ -26,8 +26,9 @@ export default function ManagerBook() {
   }, []);
 
   const toggleAddBookForm = () => {
-    setShowAddBookForm(!showAddBookForm);
+    setShowAddBookForm(true);
   };
+
   return (
     <div>
       <div>

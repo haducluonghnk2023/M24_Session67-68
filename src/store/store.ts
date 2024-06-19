@@ -1,9 +1,14 @@
-import { combineReducers, createStore } from "redux";
-import reducerAddBook from "./reducers/addBookReducer";
+// store.ts
+import { configureStore } from '@reduxjs/toolkit';
+import bookReducer from '../store/reducers/bookSlice';
 
-const rootReducer = combineReducers({
-    reducerAddBook,
+const store = configureStore({
+  reducer: {
+    books: bookReducer,
+  },
+});
 
-})
-const store = createStore(rootReducer)
 export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
